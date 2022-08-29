@@ -1,25 +1,15 @@
-.startApp {
-
-}
-
-.button-style {
-
-}
-
-.label-style {
-
-}
-
 .buttonLogin {
-    -fx-border-radius: 10px;
     -fx-background-color:  #56a5a6;
     -fx-border-color:  #56a5a6;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
     -fx-text-fill: white;
 }
 
 .buttonLogin:hover {
-    -fx-border-radius: 10px;
     -fx-background-color: white;
     -fx-border-color: #56a5a6;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
     -fx-text-fill: #56a5a6;
 }
