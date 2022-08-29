@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class StartApp extends Application {
     private Stage stage;
@@ -28,28 +29,40 @@ public class StartApp extends Application {
         // Первоначальные настройки основной сцены
         stage.centerOnScreen();
         stage.setScene(loginScene);
+        stage.setResizable(false);
         stage.setTitle("Cloud Storage Program beta 0.1");
         stage.show();
     }
 
-
     // Переключение на авторизацию
     private Scene createLoginScene() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApp.class.getResource("startView.fxml"));
+        URL location = getClass().getResource("authenticationViews/startView.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(location);
         loginScene = new Scene(fxmlLoader.load());
         startController = fxmlLoader.getController();
+        startController.setStartApp(this);
         return loginScene;
     }
 
     // Переключение на регистрацию
     private Scene createRegisterScene() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApp.class.getResource("registrationView.fxml"));
+        URL location = getClass().getResource("authenticationViews/registrationView.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(location);
         registerScene = new Scene(fxmlLoader.load());
         registrationController = fxmlLoader.getController();
+        registrationController.setStartApp(this);
         return registerScene;
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public void openRegisterScene() {
+        stage.setScene(registerScene);
+    }
+
+    public void openLoginScene() {
+        stage.setScene(loginScene);
     }
 }
