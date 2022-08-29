@@ -1,7 +1,7 @@
 package com.example.cloudstorageproject;
 
 import com.example.cloudstorageproject.controllers.RegistrationController;
-import com.example.cloudstorageproject.controllers.StartController;
+import com.example.cloudstorageproject.controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,7 +16,7 @@ public class StartApp extends Application {
     private Scene loginScene;
     private Scene registerScene;
 
-    private StartController startController;
+    private LoginController loginController;
     private RegistrationController registrationController;
 
     @Override
@@ -39,8 +39,8 @@ public class StartApp extends Application {
         URL location = getClass().getResource("authenticationViews/startView.fxml");
         FXMLLoader fxmlLoader = new FXMLLoader(location);
         loginScene = new Scene(fxmlLoader.load());
-        startController = fxmlLoader.getController();
-        startController.setStartApp(this);
+        loginController = fxmlLoader.getController();
+        loginController.setStartApp(this);
         return loginScene;
     }
 

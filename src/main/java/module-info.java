@@ -1,6 +1,7 @@
 module com.example.cloudstorageproject {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.naming;
 
 
     opens com.example.cloudstorageproject to javafx.fxml;
