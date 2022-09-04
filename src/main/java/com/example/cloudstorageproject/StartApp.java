@@ -5,6 +5,7 @@ import com.example.cloudstorageproject.controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -64,5 +65,15 @@ public class StartApp extends Application {
 
     public void openLoginScene() {
         stage.setScene(loginScene);
+    }
+
+    public void showEmptyErrorMessage(String type) {
+        String title = "";
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        if (type.equals("reg")) title = "Ошибка регистрации";
+        else if (type.equals("login")) title = "Ошибка авторизации";
+        alert.setTitle(title);
+        alert.setHeaderText("Необходимо, чтобы все поля были заполнены!");
+        alert.show();
     }
 }

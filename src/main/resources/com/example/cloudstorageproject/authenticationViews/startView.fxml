@@ -15,7 +15,7 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <TextField layoutX="158.0" layoutY="189.0" prefHeight="32.0" prefWidth="284.0" promptText="Логин" style="-fx-background-color: transparent; -fx-border-color: #56a5a6; -fx-border-width: 0px 0px 2px 0px;">
+      <TextField fx:id="loginField" layoutX="158.0" layoutY="189.0" prefHeight="32.0" prefWidth="284.0" promptText="Логин" style="-fx-background-color: transparent; -fx-border-color: #56a5a6; -fx-border-width: 0px 0px 2px 0px;">
          <font>
             <Font size="14.0" />
          </font>
@@ -25,7 +25,7 @@
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button layoutX="216.0" layoutY="354.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@../style.css" text="Войти">
+      <Button fx:id="loginBtn" layoutX="216.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#startAuth" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@../style.css" text="Войти">
          <font>
             <Font size="14.0" />
          </font>
