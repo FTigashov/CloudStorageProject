@@ -1,6 +1,6 @@
-package com.example.cloudstorageproject.controllers;
+package com.example.cloudstorageproject.client.controllers;
 
-import com.example.cloudstorageproject.StartApp;
+import com.example.cloudstorageproject.client.StartClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -31,12 +31,12 @@ public class RegistrationController {
     private TextField secondNameField;
     @FXML
     void backToLoginScene(MouseEvent event) {
-        startApp.openLoginScene();
+        startClient.openLoginScene();
     }
-    private StartApp startApp;
+    private StartClient startClient;
 
-    public void setStartApp(StartApp startApp) {
-        this.startApp = startApp;
+    public void setStartApp(StartClient startClient) {
+        this.startClient = startClient;
     }
 
     @FXML
@@ -46,7 +46,7 @@ public class RegistrationController {
         fatherNameField.getText().length() == 0 ||
         loginField.getText().length() == 0 ||
         pwdField.getText().length() == 0) {
-            startApp.showEmptyErrorMessage("reg");
+            startClient.showEmptyErrorMessage("reg");
         }
     }
 }
