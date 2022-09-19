@@ -24,7 +24,7 @@
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="registerBtn" layoutX="132.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#startRegistration" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@../style.css" text="Зарегистрироваться">
+      <Button fx:id="registerBtn" layoutX="132.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#startRegistration" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@style.css" text="Зарегистрироваться">
          <font>
             <Font size="14.0" />
          </font>
@@ -44,7 +44,7 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <Button fx:id="cancelBtn" layoutX="310.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#backToLoginScene" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@../style.css" text="Отмена">
+      <Button fx:id="cancelBtn" layoutX="310.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#backToLoginScene" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@style.css" text="Отмена">
          <font>
             <Font size="14.0" />
          </font>

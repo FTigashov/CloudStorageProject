@@ -1,4 +1,4 @@
-package com.example.cloudstorageproject.server;
+package com.example.cloudstorageproject.server.handlers;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

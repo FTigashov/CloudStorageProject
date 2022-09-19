@@ -25,7 +25,7 @@
             <Font size="14.0" />
          </font>
       </PasswordField>
-      <Button fx:id="loginBtn" layoutX="216.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#startAuth" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@../style.css" text="Войти">
+      <Button fx:id="loginBtn" layoutX="216.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#startAuth" prefHeight="39.0" prefWidth="167.0" styleClass="buttonLogin" stylesheets="@style.css" text="Войти">
          <font>
             <Font size="14.0" />
          </font>
