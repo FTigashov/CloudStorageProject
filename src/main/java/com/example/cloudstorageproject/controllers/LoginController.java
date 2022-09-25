@@ -1,16 +1,11 @@
-package com.example.cloudstorageproject.client.controllers;
+package com.example.cloudstorageproject.controllers;
 
-import com.example.cloudstorageproject.client.StartClient;
-import com.example.cloudstorageproject.client.models.Network;
+import com.example.cloudstorageproject.StartClient;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LoginController {
 
