@@ -7,31 +7,27 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class RegistrationController {
-
-    @FXML
-    private Button cancelBtn;
-
-    @FXML
-    private TextField fatherNameField;
 
     @FXML
     private TextField loginField;
 
     @FXML
-    private TextField nameField;
-
-    @FXML
     private PasswordField pwdField;
 
+    @FXML
+    private PasswordField confirmPwd;
     @FXML
     private Button registerBtn;
 
     @FXML
-    private TextField secondNameField;
-    @FXML
     void backToLoginScene(MouseEvent event) {
-        startClient.openLoginScene();
+        startClient.switchScene(0);
     }
     private StartClient startClient;
 
@@ -40,13 +36,38 @@ public class RegistrationController {
     }
 
     @FXML
-    void startRegistration(MouseEvent event) {
-        if (secondNameField.getText().length() == 0 ||
-        nameField.getText().length() == 0 ||
-        fatherNameField.getText().length() == 0 ||
-        loginField.getText().length() == 0 ||
-        pwdField.getText().length() == 0) {
-            startClient.showEmptyErrorMessage("reg");
+    void startRegistration(MouseEvent event) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        if (loginField.getText().length() == 0 ||
+        pwdField.getText().length() == 0 || confirmPwd.getText().length() == 0) {
+            startClient.showEmptyErrorMessage(1);
+        } else {
+            if (pwdField.getText().trim().equals(confirmPwd.getText().trim())) {
+                StringBuilder hashPassword = hashPassword(pwdField.getText().trim());
+                System.out.println(hashPassword);
+            } else {
+                startClient.showEmptyErrorMessage(-1);
+            }
         }
+    }
+
+
+    // Хэширование строки
+    public StringBuilder hashPassword(String stringToHash) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        byte[] hash = digest.digest(stringToHash.getBytes(StandardCharsets.UTF_8));
+        StringBuilder hexString = new StringBuilder();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if (hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString;
     }
 }

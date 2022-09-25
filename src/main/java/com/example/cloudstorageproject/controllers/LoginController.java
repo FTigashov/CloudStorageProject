@@ -19,7 +19,7 @@ public class LoginController {
 
     @FXML
     void openRegisterPage(MouseEvent event) {
-        startClient.openRegisterScene();
+        startClient.switchScene(1);
     }
     private StartClient startClient;
 
@@ -30,7 +30,7 @@ public class LoginController {
     @FXML
     void startAuth(MouseEvent event) {
         if (loginField.getText().trim().length() == 0 || pwdField.getText().trim().length() == 0) {
-            startClient.showEmptyErrorMessage("login");
+            startClient.showEmptyErrorMessage(0);
         }
     }
 

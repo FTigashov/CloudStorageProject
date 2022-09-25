@@ -53,21 +53,28 @@ public class StartClient extends Application {
         launch();
     }
 
-    public void openRegisterScene() {
-        mainStage.setScene(registerScene);
+    public void switchScene(int sceneCode) {
+        switch (sceneCode) {
+            case 0 -> mainStage.setScene(loginScene);
+            case 1 -> mainStage.setScene(registerScene);
+        }
     }
 
-    public void openLoginScene() {
-        mainStage.setScene(loginScene);
-    }
-
-    public void showEmptyErrorMessage(String type) {
-        String title = "";
+    public void showEmptyErrorMessage(int sceneCode) {
+        String title = null;
+        String headerText = "Необходимо, чтобы все поля были заполнены";
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        if (type.equals("reg")) title = "Ошибка регистрации";
-        else if (type.equals("login")) title = "Ошибка авторизации";
+        switch (sceneCode) {
+            case 0 -> title = "Ошибка авторизации";
+            case 1 -> title = "Ошибка регистрации";
+            case -1 -> {
+                title = "Ошибка регистрации";
+                headerText = "Необходимо, чтобы введенные пароли совпадали!";
+            }
+            default -> title = "Ошибка";
+        }
         alert.setTitle(title);
-        alert.setHeaderText("Необходимо, чтобы все поля были заполнены!");
+        alert.setHeaderText(headerText);
         alert.show();
     }
 }
