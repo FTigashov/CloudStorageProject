@@ -14,6 +14,10 @@ import io.netty.handler.codec.serialization.ObjectEncoder;
 
 public class StartServer {
 
+    private String HOST_NAME = "localhost";
+    private int PORT = 45001;
+    private int MAX_SIZE = 20 * 1_000_000;
+
     public static void main(String[] args) {
         new StartServer().runServer();
     }
@@ -26,11 +30,11 @@ public class StartServer {
             sb.group(boss,worker).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                    socketChannel.pipeline().addLast(new ObjectDecoder(20 * 1_000_000, ClassResolvers.cacheDisabled(null)),
+                    socketChannel.pipeline().addLast(new ObjectDecoder(MAX_SIZE, ClassResolvers.cacheDisabled(null)),
                             new ObjectEncoder(), new ClientMessageHandler());
                 }
             }).option(ChannelOption.SO_BACKLOG, 128).option(ChannelOption.TCP_NODELAY, true).childOption(ChannelOption.SO_KEEPALIVE, true);
-            ChannelFuture cf = sb.bind(45001).sync();
+            ChannelFuture cf = sb.bind(PORT).sync();
             cf.channel().closeFuture().sync();
         } catch (InterruptedException e) {
             e.printStackTrace();

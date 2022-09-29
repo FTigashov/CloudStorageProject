@@ -3,17 +3,24 @@ package com.example.cloudstorageproject.controllers;
 import com.example.cloudstorageproject.StartClient;
 import com.example.cloudstorageproject.connection.Network;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ResourceBundle;
 
-public class RegistrationController {
+public class RegistrationController implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
     @FXML
     private TextField loginField;
@@ -33,12 +40,12 @@ public class RegistrationController {
     private StartClient startClient;
     private Network network;
 
-    public void setNetwork(Network network) {
-        this.network = network;
-    }
-
     public void setStartApp(StartClient startClient) {
         this.startClient = startClient;
+    }
+
+    public void setNetwork(Network network) {
+        this.network = network;
     }
 
     @FXML
@@ -48,8 +55,10 @@ public class RegistrationController {
             startClient.showEmptyErrorMessage(1);
         } else {
             if (pwdField.getText().trim().equals(confirmPwd.getText().trim())) {
-                StringBuilder hashPassword = hashPassword(pwdField.getText().trim());
-                Network.sendRegisterMessage(loginField.getText().trim(), hashPassword.toString());
+                String login = loginField.getText().trim();
+                String password = hashPassword(pwdField.getText().trim());
+                network.openConnection();
+                network.sendRegisterMessage(login, password);
             } else {
                 startClient.showEmptyErrorMessage(-1);
             }
@@ -58,7 +67,7 @@ public class RegistrationController {
 
 
     // Хэширование строки
-    public StringBuilder hashPassword(String stringToHash) {
+    public String hashPassword(String stringToHash) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -74,6 +83,6 @@ public class RegistrationController {
             }
             hexString.append(hex);
         }
-        return hexString;
+        return hexString.toString();
     }
 }

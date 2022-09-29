@@ -19,14 +19,12 @@ public class StartClient extends Application {
     LoginController loginController;
     RegistrationController registrationController;
 
-    Network network;
+    private Network network;
 
     @Override
     public void start(Stage stage) throws Exception {
         this.mainStage = stage;
-
         network = new Network();
-//        network.openConnection();
 
         createLoginScene();
         createRegisterScene();
@@ -55,6 +53,7 @@ public class StartClient extends Application {
         registrationController = registerSceneLoader.getController();
         registrationController.setStartApp(this);
         registrationController.setNetwork(network);
+
     }
 
     public static void main(String[] args) {

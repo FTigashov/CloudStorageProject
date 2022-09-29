@@ -3,16 +3,24 @@ package com.example.cloudstorageproject.controllers;
 import com.example.cloudstorageproject.StartClient;
 import com.example.cloudstorageproject.connection.Network;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ResourceBundle;
 
-public class LoginController {
+public class LoginController implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
     @FXML
     private Button loginBtn;
@@ -29,12 +37,12 @@ public class LoginController {
     private StartClient startClient;
     private Network network;
 
-    public void setStartApp(StartClient startClient) {
-        this.startClient = startClient;
-    }
-
     public void setNetwork(Network network) {
         this.network = network;
+    }
+
+    public void setStartApp(StartClient startClient) {
+        this.startClient = startClient;
     }
 
     @FXML
@@ -42,13 +50,15 @@ public class LoginController {
         if (loginField.getText().trim().length() == 0 || pwdField.getText().trim().length() == 0) {
             startClient.showEmptyErrorMessage(0);
         } else {
-            StringBuilder passwordBuilder = hashPassword(pwdField.getText().trim());
-            Network.sendAuthMessage(loginField.getText().trim(), passwordBuilder.toString());
+            String login = loginField.getText().trim();
+            String password = hashPassword(pwdField.getText().trim());
+            network.openConnection();
+            network.sendAuthMessage(login, password);
         }
     }
 
     // Хэширование строки
-    public StringBuilder hashPassword(String stringToHash) {
+    public String hashPassword(String stringToHash) {
         MessageDigest digest = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -64,7 +74,21 @@ public class LoginController {
             }
             hexString.append(hex);
         }
-        return hexString;
+        return hexString.toString();
     }
 
+    Thread loginControllerListener = new Thread(() -> {
+        for (;;) {
+            Object messageFromServer = null;
+            try {
+                messageFromServer = network.readMessageFromServer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            if (messageFromServer.toString().startsWith("correctUserData/")) {
+                System.out.println("Пользователь зарегистрирован");
+                startClient.switchScene(0);
+            }
+        }
+    });
 }

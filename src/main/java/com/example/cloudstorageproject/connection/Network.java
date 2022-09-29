@@ -7,21 +7,25 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Network {
-    private static Socket socket;
-    private static ObjectEncoderOutputStream outcomingStream;
-    private static ObjectDecoderInputStream incomingStream;
+    private Socket socket;
+    private ObjectEncoderOutputStream outcomingStream;
+    private ObjectDecoderInputStream incomingStream;
 
-    public static void openConnection() {
+    private String HOST_NAME = "localhost";
+    private int PORT = 45001;
+    private int MAX_SIZE = 20 * 1_000_000;
+
+    public void openConnection() {
         try {
-            socket = new Socket("localhost", 45001);
+            socket = new Socket(HOST_NAME, PORT);
             outcomingStream = new ObjectEncoderOutputStream(socket.getOutputStream());
-            incomingStream = new ObjectDecoderInputStream(socket.getInputStream(), 20 * 1_000_000);
+            incomingStream = new ObjectDecoderInputStream(socket.getInputStream(), MAX_SIZE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static boolean sendAuthMessage(String login, String password) {
+    public boolean sendAuthMessage(String login, String password) {
         try {
             // TODO
             outcomingStream.writeObject(new AuthMessageSet(login, password));
@@ -33,7 +37,7 @@ public class Network {
         return false;
     }
 
-    public static boolean sendRegisterMessage(String login, String password) {
+    public boolean sendRegisterMessage(String login, String password) {
         try {
             outcomingStream.writeObject(new RegisterMessageSet(login, password));
             outcomingStream.flush();
@@ -42,5 +46,15 @@ public class Network {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public Object readMessageFromServer() {
+        Object object = null;
+        try {
+            object = incomingStream.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        return object;
     }
 }
