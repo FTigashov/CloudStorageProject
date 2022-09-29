@@ -1,6 +1,7 @@
 package com.example.cloudstorageproject.controllers;
 
 import com.example.cloudstorageproject.StartClient;
+import com.example.cloudstorageproject.connection.Network;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -30,6 +31,11 @@ public class RegistrationController {
         startClient.switchScene(0);
     }
     private StartClient startClient;
+    private Network network;
+
+    public void setNetwork(Network network) {
+        this.network = network;
+    }
 
     public void setStartApp(StartClient startClient) {
         this.startClient = startClient;
@@ -43,7 +49,7 @@ public class RegistrationController {
         } else {
             if (pwdField.getText().trim().equals(confirmPwd.getText().trim())) {
                 StringBuilder hashPassword = hashPassword(pwdField.getText().trim());
-                System.out.println(hashPassword);
+                Network.sendRegisterMessage(loginField.getText().trim(), hashPassword.toString());
             } else {
                 startClient.showEmptyErrorMessage(-1);
             }

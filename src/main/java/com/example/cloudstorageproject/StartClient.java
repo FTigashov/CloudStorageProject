@@ -1,7 +1,8 @@
 package com.example.cloudstorageproject;
 
-import com.example.cloudstorageproject.controllers.RegistrationController;
+import com.example.cloudstorageproject.connection.Network;
 import com.example.cloudstorageproject.controllers.LoginController;
+import com.example.cloudstorageproject.controllers.RegistrationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,9 +19,14 @@ public class StartClient extends Application {
     LoginController loginController;
     RegistrationController registrationController;
 
+    Network network;
+
     @Override
     public void start(Stage stage) throws Exception {
         this.mainStage = stage;
+
+        network = new Network();
+//        network.openConnection();
 
         createLoginScene();
         createRegisterScene();
@@ -39,6 +45,7 @@ public class StartClient extends Application {
         loginScene = new Scene(loginSceneLoader.load());
         loginController = loginSceneLoader.getController();
         loginController.setStartApp(this);
+        loginController.setNetwork(network);
     }
 
     // Переключение на регистрацию
@@ -47,6 +54,7 @@ public class StartClient extends Application {
         registerScene = new Scene(registerSceneLoader.load());
         registrationController = registerSceneLoader.getController();
         registrationController.setStartApp(this);
+        registrationController.setNetwork(network);
     }
 
     public static void main(String[] args) {
